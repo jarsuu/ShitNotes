@@ -57,7 +57,7 @@ fun Home(navController: NavController) {
             Text(text = "Workout Log Empty", fontSize = 26.sp, color = Color.Gray)
         }
 
-        HomeBlankButtons()
+        HomeBlankButtons(navController)
     }
 }
 
@@ -207,7 +207,7 @@ fun HomeViewSwitchBar() {
 }
 
 @Composable
-fun HomeBlankButtons() {
+fun HomeBlankButtons(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -216,7 +216,9 @@ fun HomeBlankButtons() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                navController.navigate("exercise-category")
+            },
             shape = RectangleShape,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent
