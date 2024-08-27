@@ -211,8 +211,8 @@ fun HomeBlankButtons() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 32.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp),
+            .padding(bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
@@ -223,7 +223,7 @@ fun HomeBlankButtons() {
             )
         ) {
             Column(
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Icon(
@@ -244,7 +244,7 @@ fun HomeBlankButtons() {
             )
         ) {
             Column(
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Icon(
