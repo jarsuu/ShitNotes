@@ -1,5 +1,7 @@
 package com.example.shitnotes
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +30,9 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,8 +41,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Home(navController: NavController) {
+fun Home(navController: NavController, homeViewModel: HomeViewModel) {
+    val currentDate by remember {
+        mutableStateOf(homeViewModel.currentDate)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,7 +56,7 @@ fun Home(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HomeNavBar()
-        HomeViewSwitchBar()
+        HomeViewSwitchBar(homeViewModel)
 
         Box(
             modifier = Modifier
@@ -145,8 +155,9 @@ fun HomeNavBar() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeViewSwitchBar() {
+fun HomeViewSwitchBar(homeViewModel: HomeViewModel) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -158,6 +169,7 @@ fun HomeViewSwitchBar() {
         Button(
             onClick = {
                 /*TODO: Map arrow to previous Home*/
+                homeViewModel.setDate(homeViewModel.getPreviousDate())
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
@@ -174,8 +186,9 @@ fun HomeViewSwitchBar() {
         }
 
         /*TODO: Set text to variable*/
+        val formattedDate = homeViewModel.getFormattedHomeDate(homeViewModel.currentDate)
         Text(
-            text = "Today".uppercase(),
+            text = formattedDate.uppercase(),
             color = Color.White,
             fontSize = 18.sp,
         )
@@ -183,6 +196,7 @@ fun HomeViewSwitchBar() {
         Button(
             onClick = {
                 /*TODO: Map arrow to next Home*/
+                homeViewModel.setDate(homeViewModel.getNextDate())
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,

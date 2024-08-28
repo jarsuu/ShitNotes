@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun ExerciseCategory(navController: NavController) {
+fun ExerciseCategory(navController: NavController, homeViewModel: HomeViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
