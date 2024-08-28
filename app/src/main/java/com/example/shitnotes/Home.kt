@@ -1,5 +1,7 @@
 package com.example.shitnotes
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -28,6 +31,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,9 +42,16 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Home(navController: NavController) {
+    val dateManager = DateManager()
+    var currentDate by remember {
+        mutableStateOf(dateManager.getCurrentDate())
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,18 +60,39 @@ fun Home(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HomeNavBar()
-        HomeViewSwitchBar()
+        HomeViewSwitchBar(
+            dateManager = dateManager,
+            currentDate = currentDate,
+            onDateChange = { newDate ->
+                currentDate = newDate
+            })
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = "Workout Log Empty", fontSize = 26.sp, color = Color.Gray)
+        /*TODO: Fetch workout data*/
+        if (currentDate == dateManager.getCurrentDate()) {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(20) {
+                    Text(
+                        text = "Item$it",
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    HorizontalDivider(color = Color.LightGray, thickness = 1.dp)
+                }
+            }
         }
+        else {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Workout Log Empty", fontSize = 26.sp, color = Color.Gray)
+            }
 
-        HomeBlankButtons()
+            HomeBlankButtons()
+        }
     }
 }
 
@@ -145,8 +180,13 @@ fun HomeNavBar() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeViewSwitchBar() {
+fun HomeViewSwitchBar(
+    dateManager: DateManager,
+    currentDate: LocalDate,
+    onDateChange: (LocalDate) -> Unit
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -158,6 +198,7 @@ fun HomeViewSwitchBar() {
         Button(
             onClick = {
                 /*TODO: Map arrow to previous Home*/
+                onDateChange(dateManager.getPreviousDate(currentDate))
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
@@ -174,15 +215,17 @@ fun HomeViewSwitchBar() {
         }
 
         /*TODO: Set text to variable*/
+        val formattedDate = dateManager.getFormattedHomeDate(currentDate)
         Text(
-            text = "Today".uppercase(),
+            text = formattedDate.uppercase(),
             color = Color.White,
-            fontSize = 18.sp,
+            fontSize = 15.sp,
         )
 
         Button(
             onClick = {
                 /*TODO: Map arrow to next Home*/
+                onDateChange(dateManager.getNextDate(currentDate))
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
