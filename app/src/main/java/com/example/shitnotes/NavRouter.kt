@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.shitnotes.ExerciseCategory
+import com.example.shitnotes.ExerciseList
 import com.example.shitnotes.Home
 import com.example.shitnotes.HomeViewModel
 
@@ -19,6 +20,10 @@ fun NavRouter() {
         }
         composable(route = "exercise-category") {
             ExerciseCategory(navController, homeViewModel)
+        }
+        composable(route = "exercise-category/{category}") { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category")
+            ExerciseList(navController, category)
         }
     }
 }

@@ -40,12 +40,13 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Home(navController: NavController, homeViewModel: HomeViewModel) {
     val currentDate by remember {
-        mutableStateOf(homeViewModel.currentDate)
+        mutableStateOf<LocalDate>(homeViewModel.currentDate)
     }
 
     Column(
