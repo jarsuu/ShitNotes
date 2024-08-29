@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
@@ -32,6 +33,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,7 +48,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun ExerciseCategory(navController: NavController, homeViewModel: HomeViewModel) {
+fun ExerciseCategory(
+    navController: NavController,
+    exerciseListViewModel: ExerciseListViewModel
+) {
     /*TODO: Fetch categories*/
     val categoryList = listOf(
         "Chest",
@@ -55,6 +60,8 @@ fun ExerciseCategory(navController: NavController, homeViewModel: HomeViewModel)
         "Triceps",
         "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong"
     )
+    val searchText by exerciseListViewModel.searchText.collectAsState()
+    val exercises by exerciseListViewModel.exercises.collectAsState()
 
     Column(
         modifier = Modifier
@@ -69,17 +76,32 @@ fun ExerciseCategory(navController: NavController, homeViewModel: HomeViewModel)
                 println("Category settings clicked")
             }
         )
-        ExerciseSearchBar()
+        ExerciseSearchBar(searchText = searchText, onSearchTextChange = { searchText ->
+            exerciseListViewModel.onSearchTextChange(searchText)
+        })
 
-        ExerciseCategoryDisplayedItems(
-            itemsList = categoryList,
-            onItemClick = { category ->
-                navController.navigate("exercise-category/$category")
-            },
-            /*TODO: Handle category option click*/
-            onItemOptionClick = { category ->
-                println("$category options clicked")
-            })
+        if (searchText.isBlank()) {
+            ExerciseCategoryDisplayedItems(
+                itemsList = categoryList,
+                onItemClick = { category ->
+                    navController.navigate("exercise-category/$category")
+                },
+                /*TODO: Handle category option click*/
+                onItemOptionClick = { category ->
+                    println("$category options clicked")
+                })
+        } else {
+            ExerciseCategoryDisplayedItems(
+                itemsList = exercises.map { it.name },
+                onItemClick = { exercise ->
+                    /*TODO: Handle exercise click*/
+                    println("$exercise clicked")
+                },
+                onItemOptionClick = { exercise ->
+                    /*TODO: Handle exercise options click*/
+                    println("$exercise options clicked")
+                })
+        }
     }
 }
 
@@ -150,22 +172,29 @@ fun ExerciseCategoryNavBar(
         }
     }
 }
+
 /*TODO: Handle exercise search*/
 @Composable
-fun ExerciseSearchBar() {
-    var text by rememberSaveable {
-        mutableStateOf("")
-    }
-
+fun ExerciseSearchBar(searchText: String, onSearchTextChange: (String) -> Unit) {
     TextField(
         modifier = Modifier
             .fillMaxWidth(),
         leadingIcon = {
-            Icon(imageVector = Icons.Default.Search, contentDescription = "ExerciseCategorySearch")
+            Icon(imageVector = Icons.Default.Search, contentDescription = "ExerciseSearch")
         },
-        value = text,
+        trailingIcon = {
+            if (searchText.isNotBlank()) {
+                Icon(
+                    imageVector = Icons.Default.Clear,
+                    contentDescription = "ExerciseSearchClear",
+                    Modifier.clickable {
+                        onSearchTextChange("")
+                    })
+            }
+        },
+        value = searchText,
         onValueChange = {
-            text = it
+            onSearchTextChange(it)
         },
     )
 }
