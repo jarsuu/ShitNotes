@@ -49,7 +49,7 @@ fun Home(navController: NavController, homeViewModel: HomeViewModel) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HomeNavBar()
+        HomeNavBar(navController)
         HomeViewSwitchBar(homeViewModel)
 
         Box(
@@ -66,7 +66,7 @@ fun Home(navController: NavController, homeViewModel: HomeViewModel) {
 }
 
 @Composable
-fun HomeNavBar() {
+fun HomeNavBar(navController: NavController) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -102,7 +102,7 @@ fun HomeNavBar() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(
-                onClick = { /*TODO*/ }
+                onClick = { /*TODO: Make calendar view*/ }
             ) {
                 Icon(
                     imageVector = Icons.Default.DateRange,
@@ -113,18 +113,20 @@ fun HomeNavBar() {
             }
 
             IconButton(
-                onClick = { /*TODO*/ }
+                onClick = {
+                    navController.navigate("exercise-category")
+                }
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "AddExercise",
+                    contentDescription = "ExerciseCategory",
                     modifier = Modifier.size(32.dp),
                     tint = Color.White
                 )
             }
 
             IconButton(
-                onClick = { /*TODO*/ }
+                onClick = { /*TODO: Make Settings*/ }
             ) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
