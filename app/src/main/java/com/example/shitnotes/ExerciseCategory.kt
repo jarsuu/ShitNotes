@@ -1,8 +1,10 @@
 package com.example.shitnotes
 
+import android.hardware.lights.Light
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -22,14 +25,19 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -42,6 +50,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,13 +62,7 @@ fun ExerciseCategory(
     exerciseListViewModel: ExerciseListViewModel
 ) {
     /*TODO: Fetch categories*/
-    val categoryList = listOf(
-        "Chest",
-        "Back",
-        "Biceps",
-        "Triceps",
-        "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong"
-    )
+    val categoryList = fetchCategories()
     val searchText by exerciseListViewModel.searchText.collectAsState()
     val exercises by exerciseListViewModel.exercises.collectAsState()
 
@@ -71,11 +74,7 @@ fun ExerciseCategory(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         /*TODO: Set category settings*/
-        ExerciseCategoryNavBar(
-            onSettingsClick = {
-                println("Category settings clicked")
-            }
-        )
+        ExerciseCategoryNavBar()
         ExerciseSearchBar(searchText = searchText, onSearchTextChange = { searchText ->
             exerciseListViewModel.onSearchTextChange(searchText)
         })
@@ -105,74 +104,6 @@ fun ExerciseCategory(
     }
 }
 
-@Composable
-fun ExerciseCategoryNavBar(
-    onSettingsClick: () -> Unit
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.DarkGray)
-            .height(56.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(horizontal = 8.dp)
-        ) {
-            /*TODO: Add logo*/
-            Icon(
-                imageVector = Icons.Default.Info,
-                contentDescription = "Logo",
-                tint = Color.White,
-                modifier = Modifier.size(32.dp)
-            )
-
-            Spacer(modifier = Modifier.width(4.dp))
-
-            /*TODO: Dropdown menu*/
-            ExerciseCategoryDropdownMenu()
-        }
-
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = Color.White
-                ),
-                contentPadding = PaddingValues(1.dp),
-                onClick = { /*TODO*/ }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "AddExercise",
-                    modifier = Modifier.size(32.dp)
-                )
-            }
-
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = Color.White
-                ),
-                contentPadding = PaddingValues(1.dp),
-                onClick = onSettingsClick
-            ) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = "Settings",
-                    modifier = Modifier.size(32.dp)
-                )
-            }
-        }
-    }
-}
-
 /*TODO: Handle exercise search*/
 @Composable
 fun ExerciseSearchBar(searchText: String, onSearchTextChange: (String) -> Unit) {
@@ -197,45 +128,6 @@ fun ExerciseSearchBar(searchText: String, onSearchTextChange: (String) -> Unit) 
             onSearchTextChange(it)
         },
     )
-}
-
-@Composable
-@OptIn(ExperimentalMaterial3Api::class)
-fun ExerciseCategoryDropdownMenu() {
-    val options = listOf("Option 1", "Option 2", "Option 3")
-    var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[0]) }
-
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
-    ) {
-        TextField(
-            modifier = Modifier
-                .menuAnchor()
-                .width(164.dp),
-            readOnly = true,
-            value = selectedOptionText,
-            onValueChange = {},
-            label = { Text("example") },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
-        )
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-        ) {
-            options.forEach { selectionOption ->
-                DropdownMenuItem(
-                    text = { Text(selectionOption) },
-                    onClick = {
-                        selectedOptionText = selectionOption
-                        expanded = false
-                    },
-                )
-            }
-        }
-    }
 }
 
 @Composable
@@ -282,26 +174,15 @@ fun ExerciseCategoryDisplayedItems(
     }
 }
 
-/*TODO: Handle fetching exercises*/
-fun fetchExercises(category: String?): List<String> {
-    return when (category) {
-        "Chest" -> listOf(
-            "Barbell bench press",
-            "Push up",
-            "Incline dumbbell bench press",
-            "Pec Deck"
-        )
+/*TODO: Fetch categories*/
+fun fetchCategories(): List<String> {
+    val categoryList = listOf(
+        "Chest",
+        "Back",
+        "Biceps",
+        "Triceps",
+        "longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong"
+    )
 
-        "Back" -> listOf(
-            "Pull up",
-            "Lat pulldown",
-            "Cable row",
-            "Dumbbell row",
-            "Barbell row",
-            "T-bar row"
-        )
-
-        /*TODO: Handle empty case*/
-        else -> listOf("No exercises found")
-    }
+    return categoryList
 }
