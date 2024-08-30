@@ -5,14 +5,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Checkbox
@@ -33,10 +36,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.shitnotes.RoutineDropdownMenu
 
 @Composable
-fun ExerciseCategoryNavBar() {
+fun ExerciseCategoryNavBar(navController: NavController) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -65,12 +69,13 @@ fun ExerciseCategoryNavBar() {
         }
 
         Row(
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(
                 onClick = {
                     /*TODO: Add exercise*/
+                    navController.navigate("exercise-create")
                 }
             ) {
                 Icon(
@@ -137,7 +142,7 @@ fun ExerciseCategorySettingsMenu() {
 }
 
 @Composable
-fun ExerciseNavBar() {
+fun ExerciseNavBar(navController: NavController) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -172,6 +177,7 @@ fun ExerciseNavBar() {
             IconButton(
                 onClick = {
                     /*TODO: Add exercise*/
+                    navController.navigate("exercise-create")
                 }
             ) {
                 Icon(
@@ -248,6 +254,82 @@ fun ExerciseSettingsMenu() {
                 }
             )
             HorizontalDivider()
+        }
+    }
+}
+
+@Composable
+fun ExerciseCreationNavBar() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.DarkGray)
+            .height(56.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(horizontal = 8.dp)
+        ) {
+            /*TODO: Add logo*/
+            Icon(
+                imageVector = Icons.Default.Info,
+                contentDescription = "Logo",
+                tint = Color.White,
+                modifier = Modifier.size(32.dp)
+            )
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Text(text = "New Exercise", fontSize = 18.sp, color = Color.White)
+        }
+
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(
+                onClick = {
+                    /*TODO: Add exercise*/
+                    println()
+                }
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = "CreateExercisePlus1",
+                        modifier = Modifier
+                            .size(32.dp)
+                            .align(Alignment.Center),
+                        tint = Color.White
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "CreateExerciseAdd",
+                        modifier = Modifier
+                            .size(16.dp)
+                            .align(Alignment.CenterEnd)
+                            .offset(y = 6.dp),
+                        tint = Color.White
+                    )
+                }
+            }
+
+            IconButton(
+                onClick = {
+                    /*TODO: Add exercise*/
+                    println()
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "CreateExercisePlus2",
+                    modifier = Modifier.size(32.dp),
+                    tint = Color.White
+                )
+            }
         }
     }
 }

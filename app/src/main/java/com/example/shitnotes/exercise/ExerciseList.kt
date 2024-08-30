@@ -35,7 +35,7 @@ fun ExerciseList(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         /*TODO: Set exercise settings*/
-        ExerciseNavBar()
+        ExerciseNavBar(navController)
         ExerciseSearchBar(searchText = searchText, onSearchTextChange = { searchText ->
             exerciseListViewModel.onSearchTextChange(searchText)
         })

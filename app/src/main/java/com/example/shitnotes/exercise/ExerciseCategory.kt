@@ -47,7 +47,7 @@ fun ExerciseCategory(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         /*TODO: Set category settings*/
-        ExerciseCategoryNavBar()
+        ExerciseCategoryNavBar(navController)
         ExerciseSearchBar(searchText = searchText, onSearchTextChange = { searchText ->
             exerciseListViewModel.onSearchTextChange(searchText)
         })

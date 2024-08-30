@@ -9,6 +9,7 @@ import com.example.shitnotes.exercise.ExerciseList
 import com.example.shitnotes.exercise.ExerciseListViewModel
 import com.example.shitnotes.Home
 import com.example.shitnotes.HomeViewModel
+import com.example.shitnotes.exercise.ExerciseCreation
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -26,6 +27,9 @@ fun NavRouter() {
         composable(route = "exercise-category/{category}") { backStackEntry ->
             val category = backStackEntry.arguments?.getString("category")
             ExerciseList(navController, exerciseListViewModel,category)
+        }
+        composable(route = "exercise-create") {
+            ExerciseCreation()
         }
     }
 }
