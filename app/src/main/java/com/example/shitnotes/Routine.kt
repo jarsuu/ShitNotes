@@ -31,7 +31,7 @@ fun RoutineDropdownMenu() {
         TextField(
             modifier = Modifier
                 .menuAnchor()
-                .width(164.dp),
+                .width(240.dp),
             readOnly = true,
             value = selectedOptionText,
             onValueChange = {},
