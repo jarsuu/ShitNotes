@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.shitnotes.ExerciseCategory
-import com.example.shitnotes.ExerciseList
-import com.example.shitnotes.ExerciseListViewModel
+import com.example.shitnotes.exercise.ExerciseCategory
+import com.example.shitnotes.exercise.ExerciseList
+import com.example.shitnotes.exercise.ExerciseListViewModel
 import com.example.shitnotes.Home
 import com.example.shitnotes.HomeViewModel
 
