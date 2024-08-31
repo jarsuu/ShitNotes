@@ -29,7 +29,7 @@ fun NavRouter() {
             ExerciseList(navController, exerciseListViewModel,category)
         }
         composable(route = "exercise-create") {
-            ExerciseCreation()
+            ExerciseCreation(navController)
         }
     }
 }

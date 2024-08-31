@@ -78,7 +78,7 @@ fun HomeNavBar(navController: NavController) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier.padding(horizontal = 12.dp)
         ) {
             /*TODO: Add logo*/
             Icon(

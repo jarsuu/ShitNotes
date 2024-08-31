@@ -1,11 +1,12 @@
 package com.example.shitnotes.exercise
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -14,8 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Checkbox
@@ -52,15 +53,28 @@ fun ExerciseCategoryNavBar(navController: NavController) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier.padding(horizontal = 12.dp)
         ) {
             /*TODO: Add logo*/
-            Icon(
-                imageVector = Icons.Default.Info,
-                contentDescription = "Logo",
-                tint = Color.White,
-                modifier = Modifier.size(32.dp)
-            )
+            Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.clickable {
+                navController.popBackStack()
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
+                    contentDescription = "Back",
+                    tint = Color.LightGray,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .offset(x = (-16).dp),
+                )
+
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = "Logo",
+                    tint = Color.White,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.width(4.dp))
 
@@ -154,15 +168,28 @@ fun ExerciseNavBar(navController: NavController) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier.padding(horizontal = 12.dp)
         ) {
             /*TODO: Add logo*/
-            Icon(
-                imageVector = Icons.Default.Info,
-                contentDescription = "Logo",
-                tint = Color.White,
-                modifier = Modifier.size(32.dp)
-            )
+            Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.clickable {
+                navController.popBackStack()
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
+                    contentDescription = "Back",
+                    tint = Color.LightGray,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .offset(x = (-16).dp),
+                )
+
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = "Logo",
+                    tint = Color.White,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.width(4.dp))
 
@@ -254,82 +281,6 @@ fun ExerciseSettingsMenu() {
                 }
             )
             HorizontalDivider()
-        }
-    }
-}
-
-@Composable
-fun ExerciseCreationNavBar() {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.DarkGray)
-            .height(56.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(horizontal = 8.dp)
-        ) {
-            /*TODO: Add logo*/
-            Icon(
-                imageVector = Icons.Default.Info,
-                contentDescription = "Logo",
-                tint = Color.White,
-                modifier = Modifier.size(32.dp)
-            )
-
-            Spacer(modifier = Modifier.width(4.dp))
-
-            Text(text = "New Exercise", fontSize = 18.sp, color = Color.White)
-        }
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(
-                onClick = {
-                    /*TODO: Add exercise*/
-                    println()
-                }
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = "CreateExercisePlus1",
-                        modifier = Modifier
-                            .size(32.dp)
-                            .align(Alignment.Center),
-                        tint = Color.White
-                    )
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "CreateExerciseAdd",
-                        modifier = Modifier
-                            .size(16.dp)
-                            .align(Alignment.CenterEnd)
-                            .offset(y = 6.dp),
-                        tint = Color.White
-                    )
-                }
-            }
-
-            IconButton(
-                onClick = {
-                    /*TODO: Add exercise*/
-                    println()
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = "CreateExercisePlus2",
-                    modifier = Modifier.size(32.dp),
-                    tint = Color.White
-                )
-            }
         }
     }
 }
