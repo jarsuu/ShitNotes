@@ -2,6 +2,8 @@ package com.example.shitnotes.exercise
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +19,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Add
@@ -78,6 +82,7 @@ fun ExerciseCreationForm() {
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         /*Name*/
         Text(
@@ -98,6 +103,7 @@ fun ExerciseCreationForm() {
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent
             ),
+            maxLines = 5
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -115,12 +121,13 @@ fun ExerciseCreationForm() {
         TextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = name,
-            onValueChange = { name = it },
+            value = notes,
+            onValueChange = { notes = it },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent
             ),
+            maxLines = 5
         )
 
         Spacer(modifier = Modifier.height(32.dp))
