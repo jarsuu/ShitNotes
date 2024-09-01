@@ -1,4 +1,4 @@
-package com.example.shitnotes.exercise
+package com.example.shitnotes.exercise.category
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +28,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.shitnotes.exercise.ExerciseCategoryNavBar
+import com.example.shitnotes.exercise.ExerciseListViewModel
 
 @Composable
 fun ExerciseCategoryPage(

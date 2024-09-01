@@ -10,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.shitnotes.exercise.category.ExerciseCategoryDisplayedItems
+import com.example.shitnotes.exercise.category.ExerciseSearchBar
 
 @Composable
 fun ExerciseListPage(
