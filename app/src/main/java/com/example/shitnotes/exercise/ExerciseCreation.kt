@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -50,7 +50,7 @@ fun ExerciseCreation(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .safeContentPadding()
+            .statusBarsPadding()
     ) {
         ExerciseCreationNavBar(navController = navController)
 
