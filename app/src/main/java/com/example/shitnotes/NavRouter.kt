@@ -17,7 +17,7 @@ fun NavRouter() {
     val homeViewModel = HomeViewModel()
     val exerciseListViewModel = ExerciseListViewModel()
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "home") {
+    NavHost(navController = navController, startDestination = "exercise-category") {
         composable(route = "home") {
             Home(navController, homeViewModel)
         }

@@ -41,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.shitnotes.DropdownTemplate
 
 @Composable
 fun ExerciseCreation(navController: NavController) {
@@ -58,6 +59,18 @@ fun ExerciseCreation(navController: NavController) {
 @Composable
 fun ExerciseCreationForm() {
     var name by remember {
+        mutableStateOf("")
+    }
+    var notes by remember {
+        mutableStateOf("")
+    }
+    var category by remember {
+        mutableStateOf("")
+    }
+    var type by remember {
+        mutableStateOf("")
+    }
+    var weightUnit by remember {
         mutableStateOf("")
     }
 
@@ -86,20 +99,6 @@ fun ExerciseCreationForm() {
                 unfocusedContainerColor = Color.Transparent
             ),
         )
-//        Column(modifier = Modifier.padding(8.dp).height(64.dp)) {
-//            BasicTextField(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(vertical = 10.dp),
-//                value = name,
-//                onValueChange = { name = it },
-//                textStyle = TextStyle(
-//                    color = if (isSystemInDarkTheme()) Color.White else Color.Black,
-//                    fontSize = 18.sp
-//                )
-//            )
-//            HorizontalDivider()
-//        }
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -136,16 +135,10 @@ fun ExerciseCreationForm() {
             modifier = Modifier.padding(bottom = 2.dp)
         )
         HorizontalDivider(color = Color(0xFFCF7251))
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth(),
-            value = name,
-            onValueChange = { name = it },
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent
-            ),
-        )
+        ExerciseCreationCategoryDropdown(
+            onCategoryChange = {
+                category = it
+            })
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -159,16 +152,9 @@ fun ExerciseCreationForm() {
             modifier = Modifier.padding(bottom = 2.dp)
         )
         HorizontalDivider(color = Color(0xFFCF7251))
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth(),
-            value = name,
-            onValueChange = { name = it },
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent
-            ),
-        )
+        ExerciseCreationTypeDropdown(onTypeChange = {
+            type = it
+        })
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -182,15 +168,10 @@ fun ExerciseCreationForm() {
             modifier = Modifier.padding(bottom = 2.dp)
         )
         HorizontalDivider(color = Color(0xFFCF7251))
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth(),
-            value = name,
-            onValueChange = { name = it },
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent
-            ),
+        ExerciseCreationWeightUnitDropdown(
+            onWeightUnitChange = {
+                weightUnit = it
+            }
         )
     }
 }
@@ -236,6 +217,7 @@ fun ExerciseCreationNavBar(navController: NavController) {
             Text(text = "New Exercise", fontSize = 18.sp, color = Color.White)
         }
 
+        /*Confirm exercise creation*/
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
@@ -282,4 +264,47 @@ fun ExerciseCreationNavBar(navController: NavController) {
             }
         }
     }
+}
+
+@Composable
+fun ExerciseCreationCategoryDropdown(onCategoryChange: (String) -> Unit) {
+    /*TODO: Fetch categories*/
+    val options = listOf("", "Option 1", "Option 2", "Option 3")
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        DropdownTemplate(
+            options = options,
+            onSelectChange = onCategoryChange,
+            modifier = Modifier.weight(1f)
+        )
+
+        IconButton(onClick = {
+            /*TODO: Implement add category*/
+        }) {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "ExerciseCategoryAdd",
+                tint = Color(0xFFCF7251),
+                modifier = Modifier
+                    .size(40.dp)
+                    .align(Alignment.CenterVertically)
+                    .padding(start = 8.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun ExerciseCreationTypeDropdown(onTypeChange: (String) -> Unit) {
+    val options = listOf("Weight and reps", "Distance and time")
+    DropdownTemplate(options = options, onSelectChange = onTypeChange)
+}
+
+@Composable
+fun ExerciseCreationWeightUnitDropdown(onWeightUnitChange: (String) -> Unit) {
+    val options = listOf("Default (kgs)", "Metric (kgs)", "Imperial (lbs)")
+    DropdownTemplate(options = options, onSelectChange = onWeightUnitChange)
 }
