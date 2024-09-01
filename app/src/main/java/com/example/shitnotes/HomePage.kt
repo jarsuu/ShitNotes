@@ -41,7 +41,7 @@ import androidx.navigation.NavController
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Home(navController: NavController, homeViewModel: HomeViewModel) {
+fun HomePage(navController: NavController, homeViewModel: HomeViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()

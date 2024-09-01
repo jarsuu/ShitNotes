@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
 @Composable
-fun ExerciseList(
+fun ExerciseListPage(
     navController: NavController,
     exerciseListViewModel: ExerciseListViewModel,
     category: String?

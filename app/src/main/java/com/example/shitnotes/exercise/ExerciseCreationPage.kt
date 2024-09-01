@@ -43,10 +43,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.shitnotes.DropdownTemplate
 
 @Composable
-fun ExerciseCreation(navController: NavController) {
+fun ExerciseCreationPage(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()

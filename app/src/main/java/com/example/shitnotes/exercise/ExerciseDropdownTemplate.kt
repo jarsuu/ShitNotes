@@ -1,4 +1,4 @@
-package com.example.shitnotes
+package com.example.shitnotes.exercise
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
