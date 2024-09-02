@@ -287,7 +287,7 @@ fun ExerciseCreationCategoryDropdown(onCategoryChange: (String) -> Unit) {
 
         IconButton(onClick = {
             /*TODO: Implement add category*/
-        }) {
+        }, modifier = Modifier.padding(start = 8.dp)) {
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription = "ExerciseCategoryAdd",
@@ -295,7 +295,6 @@ fun ExerciseCreationCategoryDropdown(onCategoryChange: (String) -> Unit) {
                 modifier = Modifier
                     .size(40.dp)
                     .align(Alignment.CenterVertically)
-                    .padding(start = 8.dp)
             )
         }
     }
